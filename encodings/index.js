@@ -1,5 +1,11 @@
-"use strict";
+//export { internal } from "./internal.js";
+import utf32 from "./utf32.js";
 
+const modules = [
+    utf32,
+];
+
+/*
 // Update this array if you add/rename/remove files in this directory.
 // We support Browserify by skipping automatic module discovery and requiring modules directly.
 var modules = [
@@ -13,11 +19,17 @@ var modules = [
     require("./dbcs-codec"),
     require("./dbcs-data"),
 ];
+*/
 
 // Put all encoding/alias/codec definitions to single object and export it.
-for (var i = 0; i < modules.length; i++) {
-    var module = modules[i];
-    for (var enc in module)
-        if (Object.prototype.hasOwnProperty.call(module, enc))
+const exports = {};
+
+for (const module of modules) {
+    for (const enc in module) {
+        if (Object.prototype.hasOwnProperty.call(module, enc)) {
             exports[enc] = module[enc];
+        }
+    }
 }
+
+export default exports;

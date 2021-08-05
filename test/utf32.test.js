@@ -1,7 +1,24 @@
-var assert = require('assert'),
-    Buffer = require('safer-buffer').Buffer,
-    iconv = require(__dirname+'/../'),
-    Iconv = require('iconv').Iconv;
+import * as t from "https://deno.land/std/testing/asserts.ts";
+import { iconv } from "../lib/iconv.js";
+//var assert = require('assert'),
+import { Buffer } from "../encodings/Buffer.js";
+//    iconv = require(__dirname+'/../'),
+//    Iconv = require('iconv').Iconv;
+
+const describe = (name, func) => {
+    console.log(name);
+    func();
+};
+const it = (name, func) => {
+    console.log(name);
+    func();
+};
+const assert = {
+    equal(a, b) {
+        console.log("equal", a, "==?", b, "]");
+        t.assertEquals(a, b);
+    }
+};
 
 var testStr = '1aя中文☃💩',
     testStr2 = '❝Stray high \uD977😱 and low\uDDDD☔ surrogate values.❞',
@@ -47,13 +64,14 @@ for (var i = 0; i <= 0x10F7FF; ++i) {
 }
 
 describe('UTF-32LE codec', function() {
+    /*
     it('encodes basic strings correctly', function() {
         assert.equal(iconv.encode(testStr, 'UTF32-LE').toString('hex'), utf32leBuf.toString('hex'));
     });
-
     it('decodes basic buffers correctly', function() {
         assert.equal(iconv.decode(utf32leBuf, 'ucs4le'), testStr);
     });
+    */
 
     it('decodes uneven length buffers with no error', function() {
         assert.equal(iconv.decode(Buffer.from([0x61, 0, 0, 0, 0]), 'UTF32-LE'), 'a');
@@ -166,3 +184,4 @@ function escape(s) {
 
     return sb.join('');
 }
+

@@ -1,6 +1,6 @@
-'use strict';
+import { Buffer } from "./Buffer.js";
 
-var Buffer = require('safer-buffer').Buffer;
+const exports = {};
 
 // == UTF32-LE/BE codec. ==========================================================
 
@@ -317,3 +317,5 @@ function detectEncoding(bufs, defaultEncoding) {
     // Couldn't decide (likely all zeros or not enough data).
     return defaultEncoding || 'utf-32le';
 }
+
+export default exports;
